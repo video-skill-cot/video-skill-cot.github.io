@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <!-- Meta tags for social media banners, these should be filled in appropriatly as they are your "business card" -->
+  <!-- Replace the content tag with appropriate information -->
+  <meta name="description" content="DESCRIPTION META TAG">
+  <meta property="og:title" content="Video-Skill-CoT: Skill-based Chain-of-Thoughts for Domain-Adaptive Video Reasoning"/>
+  <meta property="og:description" content="Video-Skill-CoT: Skill-based Chain-of-Thoughts for Domain-Adaptive Video Reasoning"/>
+  <meta property="og:url" content="https://video-skill-cot.github.io/"/>
+  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X630-->
+  <meta property="og:image" content="static/images/icon.png" />
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+
+
+  <meta name="twitter:title" content="Video-Skill-CoT: Skill-based Chain-of-Thoughts for Domain-Adaptive Video Reasoning">
+  <meta name="twitter:description" content="Video-Skill-CoT: Skill-based Chain-of-Thoughts for Domain-Adaptive Video Reasoning">
+  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X600-->
+  <meta name="twitter:image" content="static/images/icon.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- Keywords for your paper to be indexed by-->
+  <meta name="keywords" content="KEYWORDS SHOULD BE PLACED HERE">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <title>Video-Skill-CoT</title>
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+  rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/bulma-slider.min.js"></script>
+  <script src="static/js/index.js"></script>
+
+  <!-- custom css file  -->
+  <link rel="stylesheet" href="./static/css/twentytwenty.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <style>
+    .custom-slider-container {
+        width: 100%;
+        max-width: 900px; /* 슬라이더의 최대 너비 */
+        margin: 0 auto;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .custom-slider {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+    }
+
+    .custom-slide {
+        min-width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .custom-gif-wrapper {
+        display: flex;
+        /* flex-wrap: wrap;  */
+        justify-content: center; 
+        align-items: center;     
+        width: 100%;
+        height: 100%;    
+        box-sizing: border-box; 
+        justify-content: space-between;        
+        align-items: flex-start;
+    }
+
+    .custom-gif-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center; /* Vertically centers the video within the container */
+        align-items: center;     /* Horizontally centers the video within the container */
+        width: 2%;              /* Keeps the same width as before for each video container */
+        height: 100%;            /* Ensures the height of the container is used */
+    }
+
+
+    .custom-gif-container img {
+        width: 100%;
+        height: auto;
+    }
+    .custom-gif-container-4vid {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 25%;
+    /* width: calc(50% - 10px); */
+    aspect-ratio: 16 / 9; /* 16:9 비율 고정 */
+    /* max-width: 100%;  */
+    box-sizing: border-box; /* 여백 포함 */
+    }
+
+    .custom-gif-container-4vid img {
+        width: 100%; /* 컨테이너에 맞게 비디오 크기 조정 */
+        /* height: auto; 비율을 유지하면서 높이 조정 */
+        max-width: 100%; /* 화면을 넘지 않도록 제한 */
+        height: 100%; /*높이도 컨테이너에 맞춤*/
+        object-fit: contain; /* 비디오 비율 유지하며 맞춤 */
+        margin-bottom: 5px;
+    }
+
+
+    .custom-gif-container-3vid {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* width: 33.33%;*/
+    width: 30%;
+    aspect-ratio: 16 / 9; 
+    max-width: 100%; 
+    box-sizing: border-box; 
+    margin-bottom: 10px;   
+    }
+
+    .custom-gif-container-3vid img {
+        width: 100%; 
+        height: auto; 
+        max-width: 100%; 
+        object-fit: contain; 
+    }  
+
+    .custom-caption {
+        text-align: center;
+        margin-top: 5px;
+        font-weight: bold; 
+        font-size: 15px;  
+        margin: 0;                /* 기본 여백 제거 */
+    }
+
+    .custom-top-caption {
+        text-align: center;
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    /* 좌우 화살표 */
+    .custom-arrow {
+      position: absolute;
+      top: 47%; /* Vertically centers the arrows */
+      transform: translateY(-50%); /* Centers vertically */
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      border: none;
+      font-size: 20px;
+      padding: 12px;
+      cursor: pointer;
+      z-index: 10; /* Ensure the arrows are above the videos */
+    }
+
+    .text-with-margin {
+      margin-top: 10px; /* Adds 20px space above the text */
+      margin-bottom: 50px;
+    }
+
+    .custom-prev {
+        left: -5px; /* Positions the left arrow slightly outside the video container */
+    }
+
+    .custom-next {
+        right: -5px; /* Positions the right arrow slightly outside the video container */
+    }
+
+    /* GIF들 간의 간격 */
+    .custom-gif-container:not(:last-child) {
+        margin-right: 40px;
+    }
+
+    .custom-gif-container-4vid:not(:last-child) {
+        margin-right: 20px;
+    }
+
+    .custom-gif-container-3vid:not(:last-child) {
+    margin-right: 20px;
+    }
+
+    .dots-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+    .dot {
+        height: 15px;
+        width: 15px;
+        margin: 0 5px;
+        background-color: #bbb;
+        border-radius: 50%;
+        display: inline-block;
+        cursor: pointer;
+    }
+
+    .active {
+        background-color: #717171;
+    }
+
+    .small-normal-text {
+      font-weight: normal;
+      font-size: 10px; /* Adjust to desired size */
+    }
+    @media (max-width: 768px) {
+            .custom-gif-container-4vid {
+                width: 45%; /* 모바일에서 비디오 컨테이너 너비 조정 */
+                max-width: 100%; /* 부모 폭 초과 방지 */
+                height: auto; /* 자동 높이 설정 */
+                aspect-ratio: 16 / 9; /* 동일 비율 유지 */
+            }
+        }
+    @media (max-width: 768px) {
+        .custom-gif-container-3vid {
+            width: 45%; /* 모바일에서 비디오 컨테이너 너비 조정 */
+            max-width: 100%; /* 부모 폭 초과 방지 */
+            height: auto; /* 자동 높이 설정 */
+            aspect-ratio: 16 / 9; /* 동일 비율 유지 */
+        }
+    }
+  </style>
+</head>
+<body>
+
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <!-- title -->
+            <h1 class="title is-3 publication-title">
+              Video-Skill-CoT: Skill-based Chain-of-Thoughts for Domain-Adaptive Video Reasoning
+            </h1>
+            
+            <!-- authors -->
+            <div class="is-size-4 publication-authors">
+							<span class="author-block">
+								<a href="https://daeunni.github.io/">Daeun Lee</a>
+							</span> &nbsp;
+							<span class="author-block" , style="padding-left:30px">
+								<a href="https://jaehong31.github.io/">Jaehong Yoon</a>
+							</span> &nbsp;
+							<span class="author-block" , style="padding-left:30px">
+								<a href="https://j-min.io">Jaemin Cho</a>
+							</span> &nbsp;
+							<span class="author-block" , style="padding-left:30px">
+								<a href="https://www.cs.unc.edu/~mbansal/">Mohit Bansal</a>
+							</span>
+						</div>
+            
+            <!-- papers, github link  -->
+						<div class="is-size-5 publication-authors">
+							<span class="author-block">University of North Carolina at Chapel Hill</span>
+						</div>
+
+                <!-- Paper link -->
+                <span class="link-block">
+                  <a href="https://arxiv.org/abs/2505.xxxx" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                    </span>
+                    <span>Paper</span>
+                  </a>
+                </span>
+
+                  <!-- Github link -->
+                  <span class="link-block">
+                    <a href="https://github.com/daeunni/Video-Skill-CoT" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                  </a>
+                </span>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Let's add our teaser here! (below is working)-->  
+
+
+
+<!-- Paper abstract -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p style="font-size:18px;">
+            Recent advances in chain-of-thought (CoT) reasoning have improved complex video understanding, but existing methods often struggle to adapt to domain-specific skills (e.g., temporal grounding, event detection, spatial relations) over various video content. 
+            To address this, we propose Video-Skill-CoT (aka Video-SKoT) a framework that automatically constructs and leverages skill-aware CoT supervisions for domain-adaptive video reasoning. 
+            First, we construct skill-based CoT annotations: We extract domain-relevant reasoning skills from training questions, cluster them into a shared skill taxonomy, and create detailed multi-step CoT rationale tailored to each video question pair for training. 
+            Second, we introduce a skill-specific expert learning framework. Each expert module specializes in a subset of reasoning skills and is trained with lightweight adapters using the collected CoT supervision. 
+            We demonstrate the effectiveness of the proposed approach on three video understanding benchmarks, where Video-SKoT consistently outperforms strong baselines. We also provide in-depth analyses on comparing different CoT annotation pipelines and learned skills over multiple video domains.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+</section>
+<!-- End paper abstract -->
+
+
+<!-- Method -->
+<section class="section hero">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-sixths">
+        <h2 class="title is-3">Motivation</h2>
+        <div class="content has-text-justified">
+          <img src="static/images/motivation.png" alt="fig_pipeline"/>
+          <p style=" font-size:18px; margin-top:30px;">
+            Video-Skill-CoT that automatically constructs and leverages skill-aware CoT supervisions for domain-adaptive video reasoning.
+          </p>
+      
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Method -->
+
+
+
+<!-- Method -->
+<section class="section hero">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-sixths">
+        <h2 class="title is-3">Method</h2>
+        <div class="content has-text-justified">
+          <img src="static/images/method.png" alt="fig_pipeline"/>
+          <p style=" font-size:18px; margin-top:30px;">
+            Video-Skill-CoT that automatically constructs and leverages skill-aware CoT supervisions for domain-adaptive video reasoning.
+          </p>
+      
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Method -->
+
+
+
+<!-- Method -->
+<section class="section hero">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-sixths">
+        <h2 class="title is-3">Video-Skill-CoT</h2>
+        <div class="content has-text-justified">
+          <img src="static/images/ex1.png" alt="fig_pipeline"/>
+          <p style=" font-size:18px; margin-top:30px;">
+            Comparison of CoT annotations: (a) regular CoT and (b) our skill-based CoT.
+          </p>
+      
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Method -->
+
+
+
+  <!-- Quantitative Results -->
+  <section class="hero is-small">
+
+    <div class="hero-body">
+      <!-- <div class="container"> -->
+      <div class="container is-max-desktop"  style="margin-top:5px;">
+
+        <div class="section-title has-text-centered">
+          <h2 class="title is-3">Quantitative Results</h2>
+        </div>
+        
+        <div class="spacer"></div>
+
+
+        <div class="item pd-image" style="text-align: center;">
+          <img src="./static/images/table.png" width="90%" />
+        </div>
+           
+        <p class="text-with-margin" style="font-size:18px;">
+          Evaluation on domain-specific video reasoning benchmarks. All methods are based on an MLLM (7B)
+        </p>
+        
+
+      </div>
+    </div>
+  </section>
+
+    <!-- Quantitative Results -->
+    <section class="hero is-small">
+
+      <div class="hero-body">
+        <!-- <div class="container"> -->
+        <div class="container is-max-desktop"  style="margin-top:5px;">
+  
+          <div class="section-title has-text-centered">
+            <h2 class="title is-3">Qualitative Results</h2>
+          </div>
+          
+          <div class="spacer"></div>
+  
+  
+          <div class="item pd-image" style="text-align: center;">
+            <img src="./static/images/inf_ex.png" width="90%" />
+          </div>
+             
+          <p class="text-with-margin" style="font-size:18px;">
+            Inference output comparison: (a) LLaVA-Video trained with regular CoT and (b) LLaVA-Video
+trained with our skill-based CoT. VIDEO-SKOT successfully generates temporally grounded and precise rationales
+that more effectively support accurate answer generation.
+          </p>
+          
+  
+        </div>
+      </div>
+    </section>
+  
+
+  <footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+
+          <p>
+            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+            You are free to borrow the source code of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license"  href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- custom js file  -->
+<!-- <script defer src="./assets/js/fontawesome.all.min.js"></script> -->
+<script src="./static/js/bulma-carousel.min.js"></script>
+<script src="./static/js/bulma-slider.min.js"></script>
+<script src="./static/js/index.js"></script>
+<script src="./static/js/jquery.event.move.js"></script>
+<script src="./static/js/jquery.twentytwenty.js"></script>
+<script>
+$(function(){
+  $(".twentytwenty-container").twentytwenty({
+    default_offset_pct: 0.5, // How much of the before image is visible when the page loads
+    orientation: 'horizontal', // Orientation of the before and after images ('horizontal' or 'vertical')
+    // before_label: 'January 2017', // Set a custom before label
+    // after_label: 'March 2017', // Set a custom after label
+    // no_overlay: true, //Do not show the overlay with before and after
+    // move_slider_on_hover: true, // Move slider on mouse hover?
+    // move_with_handle_only: true, // Allow a user to swipe anywhere on the image to control slider movement. 
+    // click_to_move: false // Allow a user to click (or tap) anywhere on the image to move the slider to that location.
+  });
+});
+
+$(function(){
+  $(".main-container").twentytwenty({default_offset_pct: 0.1, orientation: 'horizontal'});
+  // $(".twentytwenty-container", "#results-carousel").twentytwenty({default_offset_pct: 0.5, ratio: 0.5});
+});
+</script>
+
+<script>
+    let currentCustomIndex = 0;
+    const customSlider = document.getElementById('custom-slider');
+    const totalCustomSlides = document.querySelectorAll('.custom-slide').length;
+    const dots = document.querySelectorAll('.dot');
+
+    function updateDots() {
+        dots.forEach((dot, index) => {
+            dot.classList.remove('active');
+            if (index === currentCustomIndex) {
+                dot.classList.add('active');
+            }
+        });
+    }
+
+    // function moveCustomSlide(direction) {
+    //     currentCustomIndex += direction;
+    //     if (currentCustomIndex < 0) {
+    //         currentCustomIndex = totalCustomSlides - 1;
+    //     } else if (currentCustomIndex >= totalCustomSlides) {
+    //         currentCustomIndex = 0;
+    //     }
+    //     customSlider.style.transform = `translateX(-${currentCustomIndex * 100}%)`;
+    //     updateDots();
+    // }
+
+    const sliderState = {
+      'custom-slider-turbo': 0,
+      'custom-slider-vc': 0,
+      'custom-slider-iter': 0,
+    };
+
+    function moveCustomSlide(sliderId, direction) {
+      const slider = document.getElementById(sliderId);
+      const slides = slider.querySelectorAll('.custom-slide');
+      const totalSlides = slides.length;
+
+      // 슬라이더 상태 업데이트
+      sliderState[sliderId] += direction;
+      if (sliderState[sliderId] < 0) {
+        sliderState[sliderId] = totalSlides - 1;
+      } else if (sliderState[sliderId] >= totalSlides) {
+        sliderState[sliderId] = 0;
+      }
+
+      // 슬라이더 이동
+      slider.style.transform = `translateX(-${sliderState[sliderId] * 100}%)`;
+
+      // 추가적으로 필요한 업데이트가 있다면 여기에 추가
+    }
+
+    function setCurrentSlide(index) {
+        currentCustomIndex = index;
+        customSlider.style.transform = `translateX(-${currentCustomIndex * 100}%)`;
+        updateDots();
+    }
+
+    // 초기 활성 점 업데이트
+    updateDots();
+</script>
+
+<!-- Statcounter tracking code -->
+  
+<!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
+
+    <!-- End of Statcounter Code -->
+
+  </body>
+  </html>
