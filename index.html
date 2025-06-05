@@ -266,7 +266,7 @@
 
                 <!-- Paper link -->
                 <span class="link-block">
-                  <a href="https://arxiv.org/abs/2505.xxxx" class="external-link button is-normal is-rounded is-dark">
+                  <a href="https://arxiv.org/abs/2506.03525" class="external-link button is-normal is-rounded is-dark">
                     <span class="icon">
                       <i class="fas fa-file-pdf"></i>
                     </span>
@@ -306,10 +306,10 @@
         <div class="content has-text-justified">
           <p style="font-size:18px;">
             Recent advances in chain-of-thought (CoT) reasoning have improved complex video understanding, but existing methods often struggle to adapt to domain-specific skills (e.g., temporal grounding, event detection, spatial relations) over various video content. 
-            To address this, we propose Video-Skill-CoT (aka Video-SKoT) a framework that automatically constructs and leverages skill-aware CoT supervisions for domain-adaptive video reasoning. 
+            To address this, we propose <b>Video-Skill-CoT</b> a framework that automatically constructs and leverages skill-aware CoT supervisions for domain-adaptive video reasoning. 
             First, we construct skill-based CoT annotations: We extract domain-relevant reasoning skills from training questions, cluster them into a shared skill taxonomy, and create detailed multi-step CoT rationale tailored to each video question pair for training. 
             Second, we introduce a skill-specific expert learning framework. Each expert module specializes in a subset of reasoning skills and is trained with lightweight adapters using the collected CoT supervision. 
-            We demonstrate the effectiveness of the proposed approach on three video understanding benchmarks, where Video-SKoT consistently outperforms strong baselines. We also provide in-depth analyses on comparing different CoT annotation pipelines and learned skills over multiple video domains.
+            We demonstrate the effectiveness of the proposed approach on three video understanding benchmarks, where <b>Video-Skill-CoT</b> consistently outperforms strong baselines. We also provide in-depth analyses on comparing different CoT annotation pipelines and learned skills over multiple video domains.
         </div>
       </div>
     </div>
@@ -347,12 +347,12 @@
   <div class="container is-max-desktop">
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-sixths">
-        <h3 class="title is-3">Training of Video-Skill-CoT</h3>
+        <h3 class="title is-3">Skill-based CoT Annotation and Skill-Specific Expert Learning</h3>
         <div class="content has-text-justified">
           <img src="static/images/method.png" alt="fig_pipeline"/>
           <p style=" font-size:18px; margin-top:30px;">
             <!-- Video-Skill-CoT that automatically constructs and leverages skill-aware CoT supervisions for domain-adaptive video reasoning. -->
-            Video-Skill-CoT automatically generates and utilizes skill-aware chain-of-thought (CoT) supervision for domain-adaptive video reasoning.
+            <b>Video-Skill-CoT</b> automatically generates and utilizes skill-aware chain-of-thought (CoT) supervision for domain-adaptive video reasoning.
             First, as shown in (a), it extracts domain-relevant reasoning skills from training questions and organizes them into a shared skill taxonomy through clustering.
             Then, in (b), it generates detailed, multi-step CoT rationales tailored to each video-question pair for use in training.
             Finally, as illustrated in (c), a skill-specific expert learning framework is introduced: each expert module focuses on a subset of reasoning skills and is trained using lightweight adapters guided by the generated CoT supervision.
@@ -409,8 +409,19 @@ In contrast, our skill-based CoT starts by identifying relevant skills (e.g., sp
         </div>
            
         <p class="text-with-margin" style="font-size:18px;">
-          We compare Video-Skill-CoT to recent MLLM baselines on three video understanding benchmarks (E.T-Bench, VSI-Bench, CinePile) with domains and required skills.
+          We compare <b>Video-Skill-CoT</b> to recent MLLM baselines on three video understanding benchmarks (E.T-Bench, VSI-Bench, CinePile) with domains and required skills.
           Our approach consistently outperforms all baselines, achieving improvements of +4.10, +5.70, and +1.59 over the fine-tuned version of LLaVA-Video on E.T.-Bench, VSI-Bench, and CinePile, respectively.
+        </p>
+        <div class="item pd-image" style="text-align: center;">
+          <img src="./static/images/video-skill-cot-ablation.png" width="70%" />
+        </div>
+           
+        <p class="text-with-margin" style="font-size:18px;">
+          We compare the impact of two key components: (1) skill-based CoT reasoning and (2) skill-specific expert modules. 
+          The full <b>Video-Skill-CoT</b> with both components achieves the best performance. 
+          Removing either the expert modules (2nd row), the skill-based CoT (3rd row), 
+          or both (last row) consistently degrades performance, 
+          showing their complementary roles. 
         </p>
         
 
@@ -438,7 +449,7 @@ In contrast, our skill-based CoT starts by identifying relevant skills (e.g., sp
              
           <p class="text-with-margin" style="font-size:18px;">
             Inference output comparison: (a) LLaVA-Video trained with regular CoT and (b) LLaVA-Video
-            trained with our skill-based CoT. Video-Skill-CoT successfully generates temporally grounded and precise rationales
+            trained with our skill-based CoT. <b>Video-Skill-CoT</b> successfully generates temporally grounded and precise rationales
             that more effectively support accurate answer generation.            
           </p>
         </div>
@@ -452,7 +463,7 @@ In contrast, our skill-based CoT starts by identifying relevant skills (e.g., sp
     <pre><code>@article{lee2025video,
       title={VIDEO-SKILL-COT: Skill-based Chain-of-Thoughts for Domain-Adaptive Video Reasoning}, 
       author={Daeun Lee and Jaehong Yoon and Jaemin Cho and Mohit Bansal},
-      journal={arXiv preprint arXiv:2506.XXXXX},
+      journal={arXiv preprint arXiv:2506.03525},
       year={2025},
 }
 </code></pre>
