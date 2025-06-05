@@ -229,6 +229,20 @@
         }
     }
   </style>
+  <!-- <style>
+    body {
+      margin: 0;
+      display: flex;
+      justify-content: center; /* 가로 중앙 */
+      align-items: center;     /* 세로 중앙 */
+      height: 100vh;           /* 전체 높이 */
+      background-color: #000;  /* 배경색 (선택) */
+    }
+    video {
+      max-width: 90%;
+      max-height: 90%;
+    }
+  </style> -->
 </head>
 <body>
 
@@ -294,9 +308,12 @@
 
 
 <!-- Let's add our teaser here! (below is working)-->  
-
-
-
+<div class="columns is-centered has-text-centered">
+<video id="video" width="640" autoplay loop muted playsinline>
+  <source src="static/videos/demo-fast.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+</div>
 <!-- Paper abstract -->
 <section class="section hero is-light">
   <div class="container is-max-desktop">
